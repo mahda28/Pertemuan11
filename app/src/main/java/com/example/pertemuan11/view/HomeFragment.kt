@@ -5,12 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.pertemuan11.R
 import com.example.pertemuan11.adapter.HomeAdapter
 import com.example.pertemuan11.databinding.FragmentHomeBinding
 import com.example.pertemuan11.model.Mahasiswa
-
 import com.google.firebase.database.*
+
 
 class HomeFragment : Fragment(){
     private lateinit var binding: FragmentHomeBinding
@@ -38,8 +40,7 @@ class HomeFragment : Fragment(){
             {
                 val mahasiswaList = ArrayList<Mahasiswa>()
                 for (snapshot in dataSnapshot.children) {
-                    val mahasiswa =
-                        snapshot.getValue(Mahasiswa::class.java)
+                    val mahasiswa = snapshot.getValue(Mahasiswa::class.java)
                     mahasiswa?.let { mahasiswaList.add(it) }
                 }
                 adapter.setData(mahasiswaList)
@@ -49,6 +50,13 @@ class HomeFragment : Fragment(){
             ) {
 // Handle database error
             }
+
         })
+        binding.btnAdd.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_tambahFragment)
+            }
+
+
+        }
+
     }
-}
